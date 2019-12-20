@@ -1,8 +1,8 @@
-package com.fontys.Tweeta.classes.User;
+package com.bigidea.twitter.classes.User;
 
-import com.fontys.Tweeta.classes.Account.Account;
-import com.fontys.Tweeta.enumerations.Gender;
-import com.fontys.Tweeta.classes.Account.interfaces.IAccount;
+import com.bigidea.twitter.classes.Account.Account;
+import com.bigidea.twitter.enumerations.Gender;
+import com.bigidea.twitter.classes.Account.interfaces.IAccount;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -11,7 +11,6 @@ public class PostManager implements IPostManager {
 
     public PostManager(User user){
         this.user = user;
-
     }
 
     @Override
