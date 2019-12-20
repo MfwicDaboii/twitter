@@ -1,8 +1,8 @@
-package com.fontys.Tweeta.classes.Posts;
+package com.bigidea.twitter.classes.Posts;
 
-import com.fontys.Tweeta.classes.User.User;
-import com.fontys.Tweeta.classes.Posts.interfaces.IPostManager;
-import com.fontys.Tweeta.classes.User.interfaces.IUser;
+import com.bigidea.twitter.classes.User.User;
+import com.bigidea.twitter.classes.Posts.interfaces.IPostManager;
+import com.bigidea.twitter.classes.User.interfaces.IUser;
 
 import java.util.ArrayList;
 

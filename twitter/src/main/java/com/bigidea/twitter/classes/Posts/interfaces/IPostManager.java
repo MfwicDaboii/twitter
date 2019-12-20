@@ -1,8 +1,8 @@
-package com.fontys.Tweeta.classes.Posts.interfaces;
+package com.bigidea.twitter.classes.Posts.interfaces;
 
-import com.fontys.Tweeta.classes.Posts.HashTag;
-import com.fontys.Tweeta.classes.Posts.Post;
-import com.fontys.Tweeta.classes.Posts.Tweet;
+import com.bigidea.twitter.classes.Posts.HashTag;
+import com.bigidea.twitter.classes.Posts.Post;
+import com.bigidea.twitter.classes.Posts.Tweet;
 
 import java.util.ArrayList;
 
