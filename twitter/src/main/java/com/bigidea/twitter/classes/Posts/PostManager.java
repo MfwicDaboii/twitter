@@ -1,0 +1,91 @@
+package com.fontys.Tweeta.classes.Posts;
+
+import com.fontys.Tweeta.classes.User.User;
+import com.fontys.Tweeta.classes.Posts.interfaces.IPostManager;
+import com.fontys.Tweeta.classes.User.interfaces.IUser;
+
+import java.util.ArrayList;
+
+public class PostManager implements IPostManager {
+    private IUser user;
+
+    public PostManager(User user){
+        this.user = user;
+
+    }
+
+    @Override
+    public Post postTweet(String content) {
+        ArrayList<HashTag> hashTags = createTags(splitContent(content));
+        Tweet tweet = new Tweet(content, hashTags);
+        user.updateTimeline(tweet);
+        return tweet;
+    }
+
+    @Override
+    public Post postReTweet(String content, Tweet originalTweet) {
+        ArrayList<HashTag> hashTags = createTags(splitContent(content));
+        ReTweet reTweet = new ReTweet(content,originalTweet,hashTags);
+        user.updateTimeline(reTweet);
+        return reTweet;
+    }
+
+    @Override
+    public Post postComment(String content,Post post) {
+        ArrayList<HashTag> hashTags = createTags(splitContent(content));
+        Comment comment = new Comment(content,hashTags);
+        user.updateTimeline(comment);
+        return comment;
+    }
+
+    @Override
+    public ArrayList<String> splitContent(String content) {
+        int x = content.indexOf('#',0);
+        int y = 0;
+        String topic;
+        ArrayList<String> topics = new ArrayList<>();
+
+        while(x != -1){
+            //Find the hashTag
+            x = content.indexOf('#',y);
+            if(y >= 0 && x != -1){
+                //Get the position where the tag ends
+                y = content.indexOf(' ',x);
+                //Get the tag
+                if(y == -1){
+                    topic = content.substring(x);
+                }else{
+                    topic = content.substring(x,y);
+                }
+                //Add to the list
+                topics.add(topic);
+            }else{
+                x = -1;
+            }
+        }
+        return topics;
+    }
+
+    @Override
+    public ArrayList<HashTag> createTags(ArrayList<String> topics) {
+        ArrayList<HashTag> hashTags = new ArrayList<>();
+        for (String s: topics) {
+            HashTag tag = new HashTag(s);
+            hashTags.add(tag);
+        }
+        return  hashTags;
+    }
+
+    @Override
+    public void like(int userId,Post post ,boolean isLike) {
+        if(isLike){
+            post.getLikes().add(userId);
+        }else{
+            for(int i = 0; i< post.getLikes().size(); i++){
+                if(post.getLikes().get(i) == userId){
+                    post.getLikes().remove(i);
+                }
+            }
+        }
+    }
+}
