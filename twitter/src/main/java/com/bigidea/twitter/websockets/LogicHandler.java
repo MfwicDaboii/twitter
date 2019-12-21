@@ -8,6 +8,8 @@ import com.bigidea.twitter.classes.Posts.PostManager;
 import com.bigidea.twitter.classes.User.User;
 import com.bigidea.twitter.classes.User.UserManager;
 import com.bigidea.twitter.websockets.DTOs.ChatDTO;
+import com.bigidea.twitter.websockets.DTOs.LoginDTO;
+import com.bigidea.twitter.websockets.DTOs.RegisterDTO;
 
 import java.util.ArrayList;
 
@@ -17,17 +19,20 @@ public class LogicHandler {
     private PostManager postManager;
     private ChatManager chatManager = new ChatManager();
 
-    public boolean checkLogin(Account account){
-        boolean result = accountManager.login(account.getUsername(), account.getPassword());
-        //TODO gegevens ophalen van db
-        return result;
+    public LoginDTO checkLogin(Account account){
+        int result = accountManager.login(account.getUsername(), account.getPassword());
+        if(result > 0){
+            return new LoginDTO(true, result);
+        }
+        return new LoginDTO(false, result);
     }
 
-    public void register(Account a, User u){
+    public LoginDTO register(Account a, User u){
         int id = accountManager.register(a.getUsername(), a.getPassword());
         accountManager.addUser(id, u.getFirstName(),u.getLastName(), u.getAge(), u.getGender(), u.getBiography());
         Account account = accountManager.getAccountById(id);
         userManager.addUserToList(account.getUser());
+        return new LoginDTO(true, id);
     }
 
     public void follow(int u1, int u2, boolean follow){

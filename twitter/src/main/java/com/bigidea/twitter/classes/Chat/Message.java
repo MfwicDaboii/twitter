@@ -11,6 +11,8 @@ public class Message {
     private LocalDateTime date;
     private boolean isRead;
 
+    public Message(){}
+
     public Message(User User, String Content){
         user = User;
         content = Content;

@@ -18,6 +18,8 @@ public class User implements IUser {
     private ArrayList<User> following;
     private ArrayList<Post> timeline;
 
+    public User(){}
+
     public User(String firstName, String lastName, int age, Gender gender, String biography) {
         this.firstName = firstName;
         this.lastName = lastName;

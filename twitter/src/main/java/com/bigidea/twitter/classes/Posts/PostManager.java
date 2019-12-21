@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class PostManager implements IPostManager {
     private IUser user;
 
+    public PostManager(){}
+
     public PostManager(User user){
         this.user = user;
     }

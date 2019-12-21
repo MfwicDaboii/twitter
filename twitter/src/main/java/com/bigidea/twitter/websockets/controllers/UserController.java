@@ -56,11 +56,11 @@ public class UserController {
     @MessageMapping("/user/chat/message/{CHAT_ID}")
     @SendTo("/topic/user/chat/{CHAT_ID}")
     public ChatDTO message(@DestinationVariable int CHAT_ID, @Payload Message msg){
-        return  handler.sendMessage(CHAT_ID, msg);
+        return handler.sendMessage(CHAT_ID, msg);
     }
 
     @MessageMapping("/user/chat/close/{CHAT_ID}")
-    public void closeChat(@DestinationVariable int CHAT_ID){
+    public void closeChat(@DestinationVariable int CHAT_ID, @Payload FollowDTO dto){
         handler.closeChat(CHAT_ID);
     }
 }

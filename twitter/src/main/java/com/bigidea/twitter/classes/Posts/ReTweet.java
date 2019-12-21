@@ -8,6 +8,8 @@ public class ReTweet extends Post{
     private Tweet originalTweet;
     private ArrayList<Comment> comments;
 
+    public ReTweet(){}
+
     public ReTweet(String content, Tweet originalTweet, ArrayList<HashTag> HashTags) {
         super(content, PostKind.RETWEET, HashTags);
         this.originalTweet = originalTweet;

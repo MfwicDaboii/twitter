@@ -1,3 +1,13 @@
-<p>
-  register works!
-</p>
+<input type="text" [(ngModel)]="account.username" [ngModelOptions]="{standalone: true}" value="" placeholder="username">
+<input type="text" [(ngModel)]="account.password" [ngModelOptions]="{standalone: true}" value="" placeholder="password">
+<input type="text" [(ngModel)]="user.firstname" [ngModelOptions]="{standalone: true}" value="" placeholder="firstname">
+<input type="text" [(ngModel)]="user.lastname" [ngModelOptions]="{standalone: true}" value="" placeholder="lastname">
+<input type="text" [(ngModel)]="user.age" [ngModelOptions]="{standalone: true}" value="" placeholder="age">
+<select [(ngModel)]="user.gender" placeholder="gender">
+  <option value="0">Male</option>
+  <option value="1">Femal</option>
+  <option value="2">other</option>
+</select>
+<input type="text" [(ngModel)]="user.biography" [ngModelOptions]="{standalone: true}" value="" placeholder="biography">
+
+<button type="button" name="button" class="btn login_btn" (click)="register()">register</button>

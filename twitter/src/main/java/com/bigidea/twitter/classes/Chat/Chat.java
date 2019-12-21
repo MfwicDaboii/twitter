@@ -11,6 +11,8 @@ public class Chat implements IChat {
     private ArrayList<Message> messages;
     private ArrayList<User> users;
 
+    public Chat(){}
+
     public Chat(ArrayList<User> users) {
         this.users = users;
         messages = new ArrayList<>();
