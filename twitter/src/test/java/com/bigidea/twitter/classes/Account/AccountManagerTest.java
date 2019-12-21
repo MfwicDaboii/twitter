@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountManagerTest {
-    private IAccount account;
-    private AccountManager accountManager;
+    private AccountManager accountManager = new AccountManager();
     private String username;
     private String password;
 
@@ -27,12 +26,11 @@ class AccountManagerTest {
     @Test
     void login() {
         //Arrange
-        account = new Account(username,password);
-        accountManager = new AccountManager(username, password);
         boolean result = false;
 
         //Act
-        result = accountManager.login(username,password);
+        accountManager.register(username,"Password123!");
+        result = accountManager.login(username,"Password123!");
 
         //Assert
         assertEquals(true, result);
@@ -40,7 +38,6 @@ class AccountManagerTest {
     @Test
     void loginWrongCredentials() {
         //Arrange
-        accountManager = new AccountManager(username, password);
         password = "WRONG!";
         boolean result = false;
 
@@ -53,7 +50,6 @@ class AccountManagerTest {
     @Test
     void loginCredentialsEmpty() {
         //Arrange
-        accountManager = new AccountManager(username, password);
         password = "";
         username = "";
         boolean result = false;
@@ -67,7 +63,6 @@ class AccountManagerTest {
     @Test
     void loginCredentialsNull() {
         //Arrange
-        accountManager = new AccountManager(username, password);
         boolean result = false;
 
         //Act
@@ -79,52 +74,48 @@ class AccountManagerTest {
     @Test
     void register() {
         //Arrange
-        AccountManager um = new AccountManager();
         String name = "Mr. Game & Watch";
         String secret = "Password123!";
 
         //Act
-        IAccount acc =  um.register(name,secret);
+        int id =  accountManager.register(name,secret);
 
         //Assert
-        assertEquals(name, acc.getUsername());
+       assertNotNull(id);
     }
     @Test
     void registerWrongPassword() {
         //Arrange
-        AccountManager um = new AccountManager();
         String name = "Mr. Game & Watch";
         String secret = "wrongKindOfPassword";
 
         //Act
-        IAccount acc =  um.register(name,secret);
+        int id =  accountManager.register(name,secret);
 
         //Assert
-        assertNull(acc);
+        assertEquals(-1, id);
     }
     @Test
     void registerCredentialsEmpty() {
         //Arrange
-        AccountManager um = new AccountManager();
         String name = "";
         String secret = "";
 
         //Act
-        IAccount acc =  um.register(name,secret);
+        int id =  accountManager.register(name,secret);
 
         //Assert
-        assertNull(acc);
+        assertEquals(-1, id);
     }
     @Test
     void registerCredentialsNull() {
         //Arrange
-        AccountManager um = new AccountManager();
 
         //Act
-        IAccount acc =  um.register(null,null);
+        int id =  accountManager.register(null,null);
 
         //Assert
-        assertNull(acc);
+        assertEquals(-1, id);
     }
     @Test
     void changeCredentials(){
@@ -134,37 +125,21 @@ class AccountManagerTest {
         boolean result = false;
 
         //Act
-        accountManager = new AccountManager(this.username, this.password);
-        accountManager.login(this.username, this.password);
-        result =accountManager.changeCredentials(username, password);
+        int id = accountManager.register("test","Password123!");
+        result =accountManager.changeCredentials(id,username, password);
 
         //Assert
         assertEquals(true, result);
     }
-    @Test
-    void changeWrongCredentials(){
-        //Arrange
-        String username = "MyNewName";
-        String password = "Secret";
-        boolean result = false;
 
-        //Act
-        accountManager = new AccountManager(this.username, this.password);
-        accountManager.login(this.username, this.password);
-        result =accountManager.changeCredentials(username, password);
-
-        //Assert
-        assertEquals(false, result);
-    }
     @Test
     void changeCredentialsEmpty(){
         //Arrange
         boolean result = false;
 
         //Act
-        accountManager = new AccountManager(this.username, this.password);
-        accountManager.login(this.username, this.password);
-        result =accountManager.changeCredentials(null, null);
+        accountManager.register("test","Password123!");
+        result =accountManager.changeCredentials(10,null, null);
 
         //Assert
         assertEquals(false, result);
@@ -172,17 +147,17 @@ class AccountManagerTest {
     @Test
     void addUser(){
         //Arrange
-        account = new Account(username,password);
-        accountManager = new AccountManager(username, password);
+        int id = accountManager.register("test","Password123!");
 
         //Act
-        accountManager.addUser("firstName", "lastName", 1, Gender.OTHER, "text.exe");
+        Account a = accountManager.getAccountById(id);
+        accountManager.addUser(id,"firstName", "lastName", 1, Gender.OTHER, "text.exe");
 
         //Assert
-        assertEquals("firstName", account.getUser().getFirstName());
-        assertEquals("lastName", account.getUser().getLastName());
-        assertEquals(1, account.getUser().getAge());
-        assertEquals(Gender.OTHER, account.getUser().getGender());
-        assertEquals("text.exe", account.getUser().getBiography());
+        assertEquals("firstName", a.getUser().getFirstName());
+        assertEquals("lastName", a.getUser().getLastName());
+        assertEquals(1, a.getUser().getAge());
+        assertEquals(Gender.OTHER, a.getUser().getGender());
+        assertEquals("text.exe", a.getUser().getBiography());
     }
 }

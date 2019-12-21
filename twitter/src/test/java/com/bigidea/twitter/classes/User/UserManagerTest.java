@@ -1,8 +1,8 @@
-package com.fontys.Tweeta.classes.User;
+package com.bigidea.twitter.classes.User;
 
-import com.fontys.Tweeta.classes.Account.Account;
-import com.fontys.Tweeta.enumerations.Gender;
-import com.fontys.Tweeta.classes.Account.interfaces.IAccount;
+import com.bigidea.twitter.classes.Account.Account;
+import com.bigidea.twitter.enumerations.Gender;
+import com.bigidea.twitter.classes.Account.interfaces.IAccount;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserManagerTest {
-    private UserManager mainUserManager;
-    private UserManager otherUserManager;
+    private UserManager manager;
     private User mainUser;
     private User otherUser;
     private IAccount account;
@@ -21,8 +20,7 @@ class UserManagerTest {
         account = new Account("amdin","password");
         mainUser = new User("Joshua", "Keulers", 21, Gender.MALE,"bla bla....");
         otherUser = new User("Bot","Bot",69,Gender.OTHER,"Biep Boep!");
-        mainUserManager = new UserManager(mainUser);
-        otherUserManager = new UserManager(otherUser);
+        manager = new UserManager();
     }
 
     @AfterEach
@@ -30,37 +28,33 @@ class UserManagerTest {
         account = null;
         mainUser = null;
         otherUser = null;
-        mainUserManager = null;
-        otherUserManager = null;
+        manager = null;
     }
 
     @Test
     void follow() {
         //Act
-        otherUserManager.follow(mainUser);
-        mainUserManager.follow(otherUser);
-
-        otherUserManager.addFollower(mainUser);
-        mainUserManager.addFollower(otherUser);
+        manager.follow(mainUser, otherUser);
+        manager.addFollower(otherUser, mainUser);
 
         //Assert
         assertEquals(1, mainUser.getFollowing().size());
-        assertEquals(1, mainUser.getFollowers().size());
+        assertEquals(1, otherUser.getFollowers().size());
     }
 
     @Test
     void unFollow() {
         //Act
-        mainUserManager.follow(otherUser);
-        otherUserManager.addFollower(mainUser);
+        manager.follow(mainUser, otherUser);
+        manager.addFollower(otherUser, mainUser);
 
-        mainUserManager.unFollow(otherUser);
-        otherUserManager.removeFollower(mainUser);
+        manager.unFollow(mainUser, otherUser);
+        manager.removeFollower(otherUser, mainUser);
 
 
         //Assert
         assertEquals(0,mainUser.getFollowing().size() );
-        assertEquals(0, mainUser.getFollowers().size());
+        assertEquals(0, otherUser.getFollowers().size());
     }
 
 
