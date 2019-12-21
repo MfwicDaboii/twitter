@@ -5,9 +5,9 @@ import com.bigidea.twitter.classes.Chat.Chat;
 import com.bigidea.twitter.classes.User.User;
 
 public interface IUserManager {
-    void follow(User user);
-    void unFollow(User user);
-    void addFollower(User user);
-    void removeFollower(User user);
-    User getUser();
+    void follow(User user,User user2);
+    void unFollow(User user,User user2);
+    void addFollower(User user,User user2);
+    void removeFollower(User user,User user2);
+    User getUserById(int id);
 }

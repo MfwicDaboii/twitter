@@ -1,39 +1,52 @@
 package com.bigidea.twitter.classes.User;
 
+import com.bigidea.twitter.classes.Account.Account;
 import com.bigidea.twitter.classes.User.interfaces.IUserManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserManager implements IUserManager {
-    private User user;
+    static List<User> users = new ArrayList<>();
 
-    public UserManager(User user){
-        this.user = user;
+    public UserManager(){
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public UserManager(List<User> list){
+        users = list;
     }
 
     @Override
-    public void follow(User user) {
-        this.user.updateFollowing(user, true);
+    public void follow(User user, User user2) {
+        user.updateFollowing(user2, true);
     }
 
     @Override
-    public void unFollow(User user) {
-        this.user.updateFollowing(user, false);
+    public void unFollow(User user, User user2) {
+        user.updateFollowing(user2, false);
     }
 
     @Override
-    public void addFollower(User user){
-        this.user.updateFollowers(user,true);
+    public void addFollower(User user, User user2) {
+       user.updateFollowers(user2,true);
     }
 
     @Override
-    public void removeFollower(User user){
-        this.user.updateFollowers(user,false);
+    public void removeFollower(User user, User user2) {
+        user.updateFollowers(user2,false);
+    }
+
+    @Override
+    public User getUserById(int id){
+        for(User u: users){
+            if(u.getId() == id){
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void addUserToList(User user){
+        users.add(user);
     }
 }
