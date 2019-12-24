@@ -10,8 +10,9 @@ export class AccountService {
   private key;
 
   constructor(
-    private socket: SocketService
-  ) { socket.connect() }
+    public socket: SocketService) {
+    this.socket.connect();
+  }
 
   login(Username, Password) {
     let msg = {
@@ -21,29 +22,23 @@ export class AccountService {
     this.socket.send("/app/login", msg);
   }
 
-  register(account: Account, user: User) {
+  register(Account: Account, User: User) {
     let msg = {
-      username: account.username,
-      password: account.password,
-      firstname: user.firstName,
-      lastname: user.lastName,
-      age: user.age,
-      gender: user.gender,
-      biography: user.biography,
-      followers: [],
-      following: [],
-      timeLine: []
+      account: Account,
+      user: User
     }
-    console.log("[ACCOUNT SERVICE] - Content of the message: " + msg.username)
+    console.log("[ACCOUNT SERVICE] - Content of the message: " + msg.account.username)
     this.socket.send("/app/register", msg);
   }
 
   cheat(account: Account) {
+
     let msg = {
       username: account.username,
       password: account.password,
     }
     console.log("[ACCOUNT SERVICE] - Content of the message: " + msg.username)
+    console.log("[ACCOUNT SERVICE] - Content of the message: " + msg.password)
     this.socket.send("/app/login/hack", msg);
   }
 

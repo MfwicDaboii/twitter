@@ -3,15 +3,15 @@ package com.bigidea.twitter.websockets;
 import com.bigidea.twitter.classes.Account.Account;
 import com.bigidea.twitter.classes.Account.AccountManager;
 import com.bigidea.twitter.classes.Chat.ChatManager;
-import com.bigidea.twitter.classes.Chat.Message;
 import com.bigidea.twitter.classes.Posts.PostManager;
 import com.bigidea.twitter.classes.User.User;
 import com.bigidea.twitter.classes.User.UserManager;
 import com.bigidea.twitter.websockets.DTOs.ChatDTO;
 import com.bigidea.twitter.websockets.DTOs.LoginDTO;
-import com.bigidea.twitter.websockets.DTOs.RegisterDTO;
+import com.bigidea.twitter.websockets.DTOs.MsgDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LogicHandler {
     private static AccountManager accountManager = new AccountManager();
@@ -29,9 +29,12 @@ public class LogicHandler {
 
     public LoginDTO register(Account a, User u){
         int id = accountManager.register(a.getUsername(), a.getPassword());
-        accountManager.addUser(id, u.getFirstName(),u.getLastName(), u.getAge(), u.getGender(), u.getBiography());
         Account account = accountManager.getAccountById(id);
-        userManager.addUserToList(account.getUser());
+        int position = userManager.getPosition(u.getFirstName());
+
+        accountManager.addUser(id, u.getFirstName(),u.getLastName(), u.getAge(), u.getGender(), u.getBiography());
+        userManager.addUserToList(position,account.getUser());
+
         return new LoginDTO(true, id);
     }
 
@@ -53,17 +56,23 @@ public class LogicHandler {
 
     public ChatDTO createChat(int id){
         User user = getUser(id);
+        System.out.println("[HANDLER] - Got user " + user.getFirstName());
         ArrayList<User> users = new ArrayList<>();
         users.add(user);
         return chatManager.create(users);
     }
 
-    public ChatDTO sendMessage(int id, Message msg){
-        User user = getUser(msg.getUser().getId());
+    public ChatDTO sendMessage(int id, MsgDTO msg){
+        User user = getUser(msg.getId());
         return new ChatDTO(chatManager.sendMessage(id,user,msg.getContent()));
     }
 
     public void closeChat(int id){
         chatManager.closeChat(id);
+    }
+
+    public List<User>getUsersByName(String element){
+        int position = userManager.getPosition(element);
+        return userManager.getUserByName(position, element);
     }
 }

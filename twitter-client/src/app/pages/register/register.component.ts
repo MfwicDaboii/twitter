@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { Account } from 'src/app/models/account';
-import { Client } from '@stomp/stompjs';
+import { Client } from 'webstomp-client';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-register',
@@ -28,10 +29,11 @@ export class RegisterComponent implements OnInit {
   constructor(
     private service: AccountService,
     private router: Router,
+    private socket: SocketService
   ) { }
 
   ngOnInit() {
-    this.client = JSON.parse(localStorage.getItem('client'));
+    this.client = this.socket.getClient();
   }
 
   register() {
@@ -50,7 +52,10 @@ export class RegisterComponent implements OnInit {
   }
 
   cheat() {
+    this.client = this.socket.getClient();
+    console.log("Client: " + this.client)
     var sub = this.client.subscribe('/topic/account', callback => {
+      console.log("[REGISTER] - inside cheat")
       let msg = JSON.parse(callback.body)
       if (msg.state) {
         sub.unsubscribe();

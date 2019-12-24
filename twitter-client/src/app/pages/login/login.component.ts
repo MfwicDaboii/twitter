@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Account } from 'src/app/models/account';
-import { Client } from '@stomp/stompjs';
+import { Client } from 'webstomp-client';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +20,11 @@ export class LoginComponent implements OnInit {
   constructor(
     private service: AccountService,
     private router: Router,
+    private socket: SocketService
   ) { }
 
   ngOnInit() {
-    this.client = JSON.parse(localStorage.getItem('client'));
+    this.client = this.socket.getClient();
   }
 
   login() {
@@ -36,6 +38,9 @@ export class LoginComponent implements OnInit {
       }
     });
     this.service.login(this.account.username, this.account.password);
+  }
+  goto() {
+    this.router.navigateByUrl('/register');
   }
 
 }

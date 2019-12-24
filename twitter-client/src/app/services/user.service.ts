@@ -10,16 +10,19 @@ export class UserService {
 
   constructor(private socket: SocketService) { }
 
-  startChat(user: User, USER_ID: number, USER2_ID: number) {
-    this.socket.send(`/app/user/${USER_ID}/chat/request/${USER2_ID}`, user);
+  startChat(USER_ID: number, USER2_ID: number) {
+    let obj = {
+      message: []
+    }
+    this.socket.send(`/app/user/${USER_ID}/chat/request/${USER2_ID}`, obj);
   }
 
-  sendMessage(CHAT_ID: number, User: User, Content: string) {
+  sendMessage(CHAT_ID: number, USER_ID: number, Content: string) {
     this.msg = {
-      user: User,
+      id: USER_ID,
       content: Content
     }
-    this.socket.send(`/app/user/chat/message/${CHAT_ID}`, this.msg);
+    this.socket.send(`/app/user/chat/${CHAT_ID}`, this.msg);
     this.msg = null;
   }
 

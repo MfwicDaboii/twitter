@@ -46,7 +46,7 @@ public class LoginDTO {
         this.key = key;
     }
 
-    public boolean isState() {
+    public boolean getState() {
         return state;
     }
 

@@ -9,6 +9,7 @@ import com.bigidea.twitter.websockets.LogicHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
@@ -23,19 +24,19 @@ public class AccountController {
     }
 
     @MessageMapping("/login")
-    @SendToUser("/topic/account")
+    @SendTo("/topic/account")
     public LoginDTO login(@Payload LoginDTO account, SimpMessageHeaderAccessor accessor){
         return handler.checkLogin(new Account(account.getUsername(), account.getPassword()));
     }
 
     @MessageMapping("/register")
-    @SendToUser("/topic/account")
+    @SendTo("/topic/account")
     public LoginDTO register(@Payload RegisterDTO dto){
         return handler.register(dto.getAccount(), dto.getUser());
     }
 
     @MessageMapping("/login/hack")
-    @SendToUser("/topic/account")
+    @SendTo("/topic/account")
     public LoginDTO cheat(@Payload LoginDTO account){
         return handler.register(
                 new Account("Bot", "Wolfpower123!"),

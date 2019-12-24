@@ -1,3 +1,7 @@
-<p>
-  home works!
-</p>
+<textarea id="chatbox" [(ngModel)]="messages">
+
+</textarea>
+<button type="button" name="button" class="btn login_btn" (click)="open()">start chat</button>
+<button type="button" name="button" class="btn login_btn" (click)="msg()">send message</button>
+<button type="button" name="button" class="btn login_btn" (click)="close()">close chat</button>
+<input type="text" [(ngModel)]="message" value="" placeholder="message">

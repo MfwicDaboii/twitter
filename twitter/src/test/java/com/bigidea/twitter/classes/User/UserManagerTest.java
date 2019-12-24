@@ -13,11 +13,9 @@ class UserManagerTest {
     private UserManager manager;
     private User mainUser;
     private User otherUser;
-    private IAccount account;
 
     @BeforeEach
     void setup(){
-        account = new Account("amdin","password");
         mainUser = new User("Joshua", "Keulers", 21, Gender.MALE,"bla bla....");
         otherUser = new User("Bot","Bot",69,Gender.OTHER,"Biep Boep!");
         manager = new UserManager();
@@ -25,7 +23,6 @@ class UserManagerTest {
 
     @AfterEach
     void tearDown(){
-        account = null;
         mainUser = null;
         otherUser = null;
         manager = null;
