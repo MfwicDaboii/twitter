@@ -38,11 +38,22 @@ export class UserService {
     this.msg = {
       follow: isFollowing
     }
-    this.socket.send(`/app/user${USER_ID}/follow/${FOLLOW_ID}`, this.msg);
+    this.socket.send(`/app/user/${USER_ID}/follow/${FOLLOW_ID}`, this.msg);
+    this.msg = null;
+  }
+
+  sendAnswer(USER_ID: number, USER2_ID: number, isFollowing: boolean) {
+    this.msg = {
+      follow: isFollowing
+    }
+    this.socket.send(`/app/user/${USER_ID}/answer/followRequest/${USER2_ID}`, this.msg);
     this.msg = null;
   }
 
   editProfile(USER_ID: number, user: User) {
     this.socket.send(`/app/user/${USER_ID}/update`, user)
+  }
+  search(element: string) {
+    this.socket.send('/app/user/search', element);
   }
 }

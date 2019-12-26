@@ -1,23 +1,18 @@
 package com.bigidea.twitter.websockets.controllers;
-
-import com.bigidea.twitter.classes.Posts.HashTag;
-import com.bigidea.twitter.classes.Posts.Post;
 import com.bigidea.twitter.classes.User.User;
+import com.bigidea.twitter.websockets.DTOs.ReTweetDTO;
+import com.bigidea.twitter.websockets.DTOs.TweetDTO;
 import com.bigidea.twitter.websockets.LogicHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class PostController {
-     static List<User> users = UserController.users;
-     static List<List<Post>> hashtagedPosts =new ArrayList<List<Post>>();
      private SimpMessagingTemplate template;
      private LogicHandler handler;
 
@@ -29,18 +24,23 @@ public class PostController {
 
      @MessageMapping("/post/tweet/{USER_ID}")
      @SendTo("/topic/post/activity/{USER_ID}")
-     public void tweet(){
-
+     public TweetDTO tweet(@DestinationVariable int USER_ID, @Payload TweetDTO dto){
+          User user = handler.getUser(USER_ID);
+          TweetDTO post = handler.createPost(USER_ID, dto.getContent());
+          for (User u: user.getFollowers()) {
+               template.convertAndSend("/topic/post/timeline/" + u.getId(), post);
+          }
+          return post;
      }
 
-     @MessageMapping("/post/retweet/{USER_ID}/{POST_ID}")
-     @SendToUser("/topic/post/activity/{USER_ID}")
-     public void reTweet(){
-
+     @MessageMapping("/post/{POST_ID}/retweet/{USER_ID}")
+     @SendTo("/topic/post/activity/{USER_ID}")
+     public void reTweet(@DestinationVariable int POST_ID,@DestinationVariable int USER_ID, ReTweetDTO dto){
+          ReTweetDTO post = handler.createRetweet();
      }
 
-     @MessageMapping("/post/comment/{USER_ID}/{POST_ID}")
-     @SendToUser("/topic/post/activity/{USER_ID}")
+     @MessageMapping("/post/{POST_ID}/comment/{USER_ID}")
+     @SendTo("/topic/post/activity/{USER_ID}")
      public void comment(){
 
      }

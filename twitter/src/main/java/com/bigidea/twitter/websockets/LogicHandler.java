@@ -3,12 +3,14 @@ package com.bigidea.twitter.websockets;
 import com.bigidea.twitter.classes.Account.Account;
 import com.bigidea.twitter.classes.Account.AccountManager;
 import com.bigidea.twitter.classes.Chat.ChatManager;
+import com.bigidea.twitter.classes.Posts.Post;
 import com.bigidea.twitter.classes.Posts.PostManager;
 import com.bigidea.twitter.classes.User.User;
 import com.bigidea.twitter.classes.User.UserManager;
 import com.bigidea.twitter.websockets.DTOs.ChatDTO;
 import com.bigidea.twitter.websockets.DTOs.LoginDTO;
 import com.bigidea.twitter.websockets.DTOs.MsgDTO;
+import com.bigidea.twitter.websockets.DTOs.TweetDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 public class LogicHandler {
     private static AccountManager accountManager = new AccountManager();
     private UserManager userManager = new UserManager();
-    private PostManager postManager;
+    private PostManager postManager = new PostManager();
     private ChatManager chatManager = new ChatManager();
 
     public LoginDTO checkLogin(Account account){
@@ -38,16 +40,21 @@ public class LogicHandler {
         return new LoginDTO(true, id);
     }
 
-    public void follow(int u1, int u2, boolean follow){
+    public List<User> follow(int u1, int u2){
         User main = userManager.getUserById(u1);
         User other = userManager.getUserById(u2);
-        if(follow){
-            userManager.follow(main,other);
-            userManager.addFollower(other, main);
-        }else{
+        System.out.println("[HANDLER] - Inside follow method");
+        if(main.getFollowing().contains(other) || other.getFollowers().contains(main)){
+            System.out.println("[HANDLER] - u1 was already following u2. Unfollowing now");
             userManager.unFollow(main,other);
             userManager.removeFollower(other, main);
+        }else{
+            System.out.println("[HANDLER] - u1 is now following u2");
+            userManager.follow(main,other);
+            userManager.addFollower(other, main);
+            return main.getFollowers();
         }
+        return new ArrayList<>();
     }
 
     public User getUser(int id){
@@ -75,4 +82,11 @@ public class LogicHandler {
         int position = userManager.getPosition(element);
         return userManager.getUserByName(position, element);
     }
+
+    public TweetDTO createPost(int id, String content){
+        User user = userManager.getUserById(id);
+        Post post = postManager.postTweet(user,content);
+        return new TweetDTO(post.getId(),id, post.getContent(),user.getFirstName(), post.getDate().toString());
+    }
+
 }

@@ -5,17 +5,39 @@ import com.bigidea.twitter.classes.User.User;
 import java.util.ArrayList;
 
 public class FollowDTO {
+    private int userID;
+    private int followerID;
+    private String username;
     private boolean follow;
-    private ArrayList<User> users;
 
     public FollowDTO(){}
 
-    public FollowDTO(ArrayList<User> users) {
-        this.users = users;
-    }
-
     public FollowDTO(boolean follow) {
         this.follow = follow;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getFollowerID() {
+        return followerID;
+    }
+
+    public void setFollowerID(int followerID) {
+        this.followerID = followerID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public boolean isFollow() {
@@ -24,13 +46,5 @@ public class FollowDTO {
 
     public void setFollow(boolean follow) {
         this.follow = follow;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
     }
 }

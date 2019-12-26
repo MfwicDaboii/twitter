@@ -9,6 +9,9 @@ public class UserManager implements IUserManager {
     static List<List<User>> users = new ArrayList<>();
 
     public UserManager(){
+        for(int i = 0; i < 26; i++){
+            users.add(new ArrayList<>());
+        }
     }
 
     @Override
