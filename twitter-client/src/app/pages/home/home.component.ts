@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SocketService } from 'src/app/services/socket.service';
 import { User } from 'src/app/models/user';
 import { Client } from 'webstomp-client';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +17,11 @@ export class HomeComponent implements OnInit {
   private otherUserId;
   private messages = [];
   private options = [];
+  private postContent: string = "";
   private message: string = "";
   private searchElement: string = "";
+  private posts = [];
+  private timeline = [];
 
   user: User = {
     id: 0,
@@ -30,6 +34,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private service: UserService,
+    private postService: PostService,
     private router: Router,
     private route: ActivatedRoute,
     private socket: SocketService
@@ -79,13 +84,18 @@ export class HomeComponent implements OnInit {
     let ohterUser = this.otherUserId as unknown as number;
     this.router.navigateByUrl('/user/' + this.user.id + "/" + ohterUser);
   }
+  createPost() {
+    this.postService.post(this.user.id, this.postContent);
+  }
   initAllSubscribtions() {
+    //Chat requests
     this.client.subscribe(`/topic/user/chatRequest/${this.user.id}`, callback => {
       let dto = JSON.parse(callback.body);
       this.chatKey = dto.chatID
       this.subToChat();
     })
 
+    //Follow requests
     this.client.subscribe(`/topic/user/request/follow/${this.user.id}`, callback => {
       let dto = JSON.parse(callback.body);
       alert("You got a follow request from " + dto.username);
@@ -93,10 +103,25 @@ export class HomeComponent implements OnInit {
       this.service.sendAnswer(this.user.id, dto.userID, true);
     })
 
+    //Answer of followrequest *TODO: Give player a choice before sending awnser back
     this.client.subscribe(`/topic/user/${this.user.id}/followRequestAnswer`, callback => {
       let dto = JSON.parse(callback.body);
       console.log("yeeeeah you got friends now!")
       alert("You and " + dto.username + " are now friends");
+    })
+
+    //Own activity as in: tweeting/retweeting/commenting and following other users
+    this.client.subscribe(`/topic/post/activity/${this.user.id}`, callback => {
+      let dto = JSON.parse(callback.body);
+      this.posts.push(dto.content);
+    })
+
+    //Timeline : this contains the activity of other players by showing them in order
+    //TODO: create a subscribemapping that gets all of the recent activity of the user u are following, when you enter this page
+    this.client.subscribe(`/topic/post/timeline/${this.user.id}`, callback => {
+      let dto = JSON.parse(callback.body);
+      //TODO: check welke soort activiteit het is voordat ik de info laat zien
+      this.timeline.push(dto.content);
     })
   }
 }

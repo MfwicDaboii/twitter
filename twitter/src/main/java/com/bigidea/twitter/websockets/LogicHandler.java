@@ -5,12 +5,11 @@ import com.bigidea.twitter.classes.Account.AccountManager;
 import com.bigidea.twitter.classes.Chat.ChatManager;
 import com.bigidea.twitter.classes.Posts.Post;
 import com.bigidea.twitter.classes.Posts.PostManager;
+import com.bigidea.twitter.classes.Posts.ReTweet;
+import com.bigidea.twitter.classes.Posts.Tweet;
 import com.bigidea.twitter.classes.User.User;
 import com.bigidea.twitter.classes.User.UserManager;
-import com.bigidea.twitter.websockets.DTOs.ChatDTO;
-import com.bigidea.twitter.websockets.DTOs.LoginDTO;
-import com.bigidea.twitter.websockets.DTOs.MsgDTO;
-import com.bigidea.twitter.websockets.DTOs.TweetDTO;
+import com.bigidea.twitter.websockets.DTOs.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +86,13 @@ public class LogicHandler {
         User user = userManager.getUserById(id);
         Post post = postManager.postTweet(user,content);
         return new TweetDTO(post.getId(),id, post.getContent(),user.getFirstName(), post.getDate().toString());
+    }
+
+    public ReTweetDTO createReTweet(int postid, int userid, String content){
+        User user = userManager.getUserById(userid);
+        Tweet orginal = postManager.getPostById(user, postid) ;
+        Post rt = postManager.postReTweet(user, content, orginal);
+        return new ReTweetDTO(rt.getContent(),user.getFirstName() ,rt.getDate().toString() ,orginal.getContent());
     }
 
 }

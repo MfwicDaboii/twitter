@@ -2,6 +2,7 @@ package com.bigidea.twitter.classes.Posts;
 
 import com.bigidea.twitter.enumerations.PostKind;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -21,6 +22,9 @@ public abstract class Post {
         this.hashTags = HashTags;
         likes = new ArrayList<>();
         date = LocalDateTime.now();
+        SecureRandom rnd = new SecureRandom();
+        id = rnd.nextInt(9999);
+
     }
 
     public Post(int Id, String content, PostKind postKind,ArrayList<HashTag> HashTags) {

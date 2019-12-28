@@ -16,3 +16,23 @@
 
 <input type="text" [(ngModel)]="otherUserId" value="" placeholder="fill in other usersId">
 <button type="button" name="button" class="btn login_btn" (click)="goToUser()">go to userpage</button>
+
+<p>Post something here</p>
+<input type="text" [(ngModel)]="postContent" value="" placeholder="content of post">
+<button type="button" name="button" class="btn login_btn" (click)="createPost()">create post</button>
+<div *ngIf="posts.length > 0">
+  <ul *ngFor="let content of posts">
+    <li>
+      {{content}}
+    </li>
+  </ul>
+</div>
+
+<p>Timeline of other users here</p>
+<div *ngIf="timeline.length > 0">
+  <ul *ngFor="let content of timeline">
+    <li>
+      {{content}}
+    </li>
+  </ul>
+</div>

@@ -35,8 +35,14 @@ public class PostController {
 
      @MessageMapping("/post/{POST_ID}/retweet/{USER_ID}")
      @SendTo("/topic/post/activity/{USER_ID}")
-     public void reTweet(@DestinationVariable int POST_ID,@DestinationVariable int USER_ID, ReTweetDTO dto){
-          ReTweetDTO post = handler.createRetweet();
+     public ReTweetDTO reTweet(@DestinationVariable int POST_ID,@DestinationVariable int USER_ID, ReTweetDTO dto){
+          ReTweetDTO post = handler.createReTweet(POST_ID, USER_ID, dto.getContent());
+          User user = handler.getUser(dto.getUserID());
+          post.setUserID(dto.getUserID());
+          for (User u: user.getFollowers()) {
+               template.convertAndSend("/topic/post/timeline/" + u.getId(), post);
+          }
+          return post;
      }
 
      @MessageMapping("/post/{POST_ID}/comment/{USER_ID}")

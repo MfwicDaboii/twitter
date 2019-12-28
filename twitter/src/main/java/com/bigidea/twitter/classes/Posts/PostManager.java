@@ -84,4 +84,13 @@ public class PostManager implements IPostManager {
             }
         }
     }
+
+    public Tweet getPostById(User user, int id){
+        for (Post p: user.getTimeline()) {
+            if(p.getId()== id){
+              return new Tweet(id,p.getContent(),p.getHashTags());
+            }
+        }
+        return null;
+    }
 }

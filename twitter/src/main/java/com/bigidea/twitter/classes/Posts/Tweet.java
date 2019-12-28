@@ -15,6 +15,11 @@ public class Tweet extends Post {
         reTweets = new ArrayList<>();
         comments = new ArrayList<>();
     }
+    public Tweet(int id,String content, ArrayList<HashTag> HashTags) {
+        super(id,content, PostKind.TWEET, HashTags);
+        reTweets = new ArrayList<>();
+        comments = new ArrayList<>();
+    }
 
     public Tweet(int Id, String content, ArrayList<HashTag> HashTags, ArrayList<ReTweet> reTweets, ArrayList<Comment> comments) {
         super(Id, content, PostKind.TWEET, HashTags);

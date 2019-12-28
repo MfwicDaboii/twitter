@@ -20,7 +20,7 @@ class PostManagerTest {
     void setUp(){
         user = new User(1,"Joshua", "Keulers", 21, Gender.MALE,"bla bla....",  new ArrayList<>(),new ArrayList<>(), new ArrayList<>());
         tweet = new Tweet(1,"Gimma ma goddamn", new ArrayList<>(),new ArrayList<>(), new ArrayList<>());
-        manager = new PostManager(user);
+        manager = new PostManager();
     }
 
     @AfterEach
@@ -36,7 +36,7 @@ class PostManagerTest {
         String content = "Hello world!";
 
         //Act
-        manager.postTweet(content);
+        manager.postTweet(user,content);
         Post post = user.getTimeline().get(0);
 
         //Assert
@@ -49,7 +49,7 @@ class PostManagerTest {
         String content = "JUST BE PATIENT!";
 
         //Act
-        manager.postReTweet(content,tweet);
+        manager.postReTweet(user,content,tweet);
         Post post = user.getTimeline().get(0);
 
         //Assert
@@ -62,7 +62,7 @@ class PostManagerTest {
         String content = "JUST BE PATIENT!";
 
         //Act
-        manager.postComment(content,tweet);
+        manager.postComment(user,content,tweet);
         Post post = user.getTimeline().get(0);
 
         //Assert
