@@ -5,16 +5,14 @@ import com.bigidea.twitter.classes.Posts.interfaces.IPostManager;
 import com.bigidea.twitter.classes.User.interfaces.IUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostManager implements IPostManager {
-    private IUser user;
 
-    public PostManager(User user){
-        this.user = user;
-    }
+    public PostManager(){}
 
     @Override
-    public Post postTweet(String content) {
+    public Post postTweet(User user,String content) {
         ArrayList<HashTag> hashTags = createTags(splitContent(content));
         Tweet tweet = new Tweet(content, hashTags);
         user.updateTimeline(tweet);
@@ -22,7 +20,7 @@ public class PostManager implements IPostManager {
     }
 
     @Override
-    public Post postReTweet(String content, Tweet originalTweet) {
+    public Post postReTweet(User user,String content, Tweet originalTweet) {
         ArrayList<HashTag> hashTags = createTags(splitContent(content));
         ReTweet reTweet = new ReTweet(content,originalTweet,hashTags);
         user.updateTimeline(reTweet);
@@ -30,7 +28,7 @@ public class PostManager implements IPostManager {
     }
 
     @Override
-    public Post postComment(String content,Post post) {
+    public Post postComment(User user,String content,Post post) {
         ArrayList<HashTag> hashTags = createTags(splitContent(content));
         Comment comment = new Comment(content,hashTags);
         user.updateTimeline(comment);
@@ -86,5 +84,14 @@ public class PostManager implements IPostManager {
                 }
             }
         }
+    }
+
+    public Tweet getPostById(User user, int id){
+        for (Post p: user.getTimeline()) {
+            if(p.getId()== id){
+              return new Tweet(id,p.getContent(),p.getHashTags());
+            }
+        }
+        return null;
     }
 }

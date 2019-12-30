@@ -9,6 +9,7 @@ import com.bigidea.twitter.websockets.LogicHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
@@ -23,27 +24,23 @@ public class AccountController {
     }
 
     @MessageMapping("/login")
-    @SendToUser("/topic/account")
+    @SendTo("/topic/account")
     public LoginDTO login(@Payload LoginDTO account, SimpMessageHeaderAccessor accessor){
-        //TODO: haal user op na inloggen (*RESTAPI)
-        boolean result = handler.checkLogin(new Account(account.getUsername(), account.getPassword()));
-        return new LoginDTO(result);
+        return handler.checkLogin(new Account(account.getUsername(), account.getPassword()));
     }
 
     @MessageMapping("/register")
-    @SendToUser("/topic/account")
-    public RegisterDTO register(@Payload RegisterDTO dto){
-        handler.register(dto.getAccount(), dto.getUser());
-        return new RegisterDTO(true);
+    @SendTo("/topic/account")
+    public LoginDTO register(@Payload RegisterDTO dto){
+        return handler.register(dto.getAccount(), dto.getUser());
     }
 
     @MessageMapping("/login/hack")
-    @SendToUser("/topic/account")
-    public RegisterDTO cheat(@Payload LoginDTO account){
-        handler.register(
+    @SendTo("/topic/account")
+    public LoginDTO cheat(@Payload LoginDTO account){
+        return handler.register(
                 new Account("Bot", "Wolfpower123!"),
                 new User("Joshua", "Keulers",21, Gender.MALE, "Coole boy")
         );
-        return new RegisterDTO(true);
     }
 }

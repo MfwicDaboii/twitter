@@ -4,7 +4,7 @@ import com.bigidea.twitter.enumerations.PostKind;
 
 import java.util.ArrayList;
 
-public class Tweet extends Post {
+public class Tweet extends Post implements Comparable<Post> {
     private ArrayList<ReTweet> reTweets;
     private ArrayList<Comment> comments;
 
@@ -12,6 +12,11 @@ public class Tweet extends Post {
 
     public Tweet(String content, ArrayList<HashTag> HashTags) {
         super(content, PostKind.TWEET, HashTags);
+        reTweets = new ArrayList<>();
+        comments = new ArrayList<>();
+    }
+    public Tweet(int id,String content, ArrayList<HashTag> HashTags) {
+        super(id,content, PostKind.TWEET, HashTags);
         reTweets = new ArrayList<>();
         comments = new ArrayList<>();
     }
@@ -44,5 +49,10 @@ public class Tweet extends Post {
                 "reTweets=" + reTweets +
                 ", comments=" + comments +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        return 0;
     }
 }

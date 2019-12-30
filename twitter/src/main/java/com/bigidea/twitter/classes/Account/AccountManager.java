@@ -17,17 +17,17 @@ public class AccountManager implements IAccountManager {
     }
 
     @Override
-    public boolean login(String username, String password) {
+    public int login(String username, String password) {
         try{
             for (Account a: accounts){
                 if(a.getUsername().equals(username) && a.getPassword().equals(password)){
-                    return true;
+                    return a.getUser().getId();
                 }
             }
         }catch(NullPointerException exception){
-            return false;
+            return -1;
         }
-        return false;
+        return -1;
     }
 
     @Override

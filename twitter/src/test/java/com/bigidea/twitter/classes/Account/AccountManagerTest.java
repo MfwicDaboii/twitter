@@ -16,7 +16,7 @@ class AccountManagerTest {
     @BeforeEach
     void setUp(){
         username = "Mfwic";
-        password = "daboi";
+        password = "Password123!";
     }
     @AfterEach
     void tearDown(){
@@ -26,50 +26,52 @@ class AccountManagerTest {
     @Test
     void login() {
         //Arrange
-        boolean result = false;
-
+        int result = -1;
+        Account account;
         //Act
-        accountManager.register(username,"Password123!");
-        result = accountManager.login(username,"Password123!");
+        int id = accountManager.register(username,password);
+        accountManager.addUser(id,"bot","bottington",1,Gender.OTHER, "biep biep");
+        result = accountManager.login(username,password);
+        account = accountManager.getAccountById(id);
 
         //Assert
-        assertEquals(true, result);
+        assertEquals(account.getUser().getId(), result);
     }
     @Test
     void loginWrongCredentials() {
         //Arrange
         password = "WRONG!";
-        boolean result = false;
+        int result = -1;
 
         //Act
         result = accountManager.login(username,password);
 
         //Assert
-        assertEquals(false, result);
+        assertEquals(-1, result);
     }
     @Test
     void loginCredentialsEmpty() {
         //Arrange
         password = "";
         username = "";
-        boolean result = false;
+        int result = 0;
 
         //Act
         result = accountManager.login(username,password);
 
         //Assert
-        assertEquals(false, result);
+        assertEquals(-1, result);
     }
     @Test
     void loginCredentialsNull() {
         //Arrange
-        boolean result = false;
+        int result = 0;
 
         //Act
         result = accountManager.login(null,null);
 
         //Assert
-        assertEquals(false, result);
+        assertEquals(-1, result);
     }
     @Test
     void register() {

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Comment extends Post{
 
+    public Comment(){}
+
     public Comment(String content, ArrayList<HashTag> HashTags) {
         super(content, PostKind.COMMENT, HashTags);
     }

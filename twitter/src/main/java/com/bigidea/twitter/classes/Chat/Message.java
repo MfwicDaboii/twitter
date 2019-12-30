@@ -11,6 +11,12 @@ public class Message {
     private LocalDateTime date;
     private boolean isRead;
 
+    public Message(){}
+
+    public Message(String content){
+        this.content = content;
+    }
+
     public Message(User User, String Content){
         user = User;
         content = Content;

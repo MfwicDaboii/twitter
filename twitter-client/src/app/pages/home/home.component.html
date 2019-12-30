@@ -1,3 +1,38 @@
-<p>
-  home works!
-</p>
+<textarea id="chatbox" [(ngModel)]="messages">
+
+</textarea>
+<button type="button" name="button" class="btn login_btn" (click)="open()">start chat</button>
+<button type="button" name="button" class="btn login_btn" (click)="msg()">send message</button>
+<button type="button" name="button" class="btn login_btn" (click)="close()">close chat</button>
+<input type="text" [(ngModel)]="message" value="" placeholder="message">
+<input type="text" [(ngModel)]="searchElement" (onChange)="search()" placeholder="message">
+<div *ngIf="options.length > 0">
+  <ul *ngFor="let user of options">
+    <li (click)="go(user.id)">
+      {{user.firstName}}
+    </li>
+  </ul>
+</div>
+
+<input type="text" [(ngModel)]="otherUserId" value="" placeholder="fill in other usersId">
+<button type="button" name="button" class="btn login_btn" (click)="goToUser()">go to userpage</button>
+
+<p>Post something here</p>
+<input type="text" [(ngModel)]="postContent" value="" placeholder="content of post">
+<button type="button" name="button" class="btn login_btn" (click)="createPost()">create post</button>
+<div *ngIf="posts.length > 0">
+  <ul *ngFor="let content of posts">
+    <li>
+      {{content}}
+    </li>
+  </ul>
+</div>
+
+<p>Timeline of other users here</p>
+<div *ngIf="timeline.length > 0">
+  <ul *ngFor="let content of timeline">
+    <li>
+      {{content}}
+    </li>
+  </ul>
+</div>

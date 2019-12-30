@@ -4,6 +4,8 @@ public class HashTag {
     private int id;
     private String topic;
 
+    public HashTag(){}
+
     public HashTag(String Topic){
         topic = Topic;
     }
