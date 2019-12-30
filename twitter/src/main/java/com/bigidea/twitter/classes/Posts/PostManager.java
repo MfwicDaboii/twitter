@@ -5,6 +5,7 @@ import com.bigidea.twitter.classes.Posts.interfaces.IPostManager;
 import com.bigidea.twitter.classes.User.interfaces.IUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostManager implements IPostManager {
 

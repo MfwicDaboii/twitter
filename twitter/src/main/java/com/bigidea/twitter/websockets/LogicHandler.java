@@ -2,6 +2,7 @@ package com.bigidea.twitter.websockets;
 
 import com.bigidea.twitter.classes.Account.Account;
 import com.bigidea.twitter.classes.Account.AccountManager;
+import com.bigidea.twitter.classes.Algorithm;
 import com.bigidea.twitter.classes.Chat.ChatManager;
 import com.bigidea.twitter.classes.Posts.Post;
 import com.bigidea.twitter.classes.Posts.PostManager;
@@ -88,11 +89,22 @@ public class LogicHandler {
         return new TweetDTO(post.getId(),id, post.getContent(),user.getFirstName(), post.getDate().toString());
     }
 
-    public ReTweetDTO createReTweet(int postid, int userid, String content){
-        User user = userManager.getUserById(userid);
-        Tweet orginal = postManager.getPostById(user, postid) ;
-        Post rt = postManager.postReTweet(user, content, orginal);
-        return new ReTweetDTO(rt.getContent(),user.getFirstName() ,rt.getDate().toString() ,orginal.getContent());
+    public ReTweetDTO createReTweet(int postid, int originalUserId, int rtUserId,String content){
+        User OUser = userManager.getUserById(originalUserId);
+        User RTUser = userManager.getUserById(rtUserId);
+        Tweet orginal = postManager.getPostById(OUser, postid) ;
+        Post rt = postManager.postReTweet(RTUser, content, orginal);
+        return new ReTweetDTO(rt.getId(),rt.getContent(),RTUser.getFirstName()
+                ,rt.getDate().toString() ,orginal.getContent(), OUser.getFirstName());
     }
 
+    public List<Post> getAllActivity(int id){
+        User user = userManager.getUserById(id);
+        Algorithm algorithm =  new Algorithm();
+        List<Post> sortedList = new ArrayList<>();
+        for(User u:user.getFollowing()){
+            sortedList = algorithm.sortPostsByDate(sortedList, u.getTimeline());
+        }
+        return  sortedList;
+    }
 }

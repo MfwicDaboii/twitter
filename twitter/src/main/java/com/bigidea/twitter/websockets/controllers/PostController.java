@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -36,7 +37,7 @@ public class PostController {
      @MessageMapping("/post/{POST_ID}/retweet/{USER_ID}")
      @SendTo("/topic/post/activity/{USER_ID}")
      public ReTweetDTO reTweet(@DestinationVariable int POST_ID,@DestinationVariable int USER_ID, ReTweetDTO dto){
-          ReTweetDTO post = handler.createReTweet(POST_ID, USER_ID, dto.getContent());
+          ReTweetDTO post = handler.createReTweet(POST_ID, USER_ID, dto.getUserID(),dto.getContent());
           User user = handler.getUser(dto.getUserID());
           post.setUserID(dto.getUserID());
           for (User u: user.getFollowers()) {

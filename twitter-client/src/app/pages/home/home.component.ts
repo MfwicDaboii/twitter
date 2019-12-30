@@ -5,6 +5,7 @@ import { SocketService } from 'src/app/services/socket.service';
 import { User } from 'src/app/models/user';
 import { Client } from 'webstomp-client';
 import { PostService } from 'src/app/services/post.service';
+import { Post, postKind } from 'src/app/models/post';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
   private postContent: string = "";
   private message: string = "";
   private searchElement: string = "";
-  private posts = [];
+  private posts: Post[] = [];
   private timeline = [];
 
   user: User = {
@@ -87,6 +88,30 @@ export class HomeComponent implements OnInit {
   createPost() {
     this.postService.post(this.user.id, this.postContent);
   }
+
+  initPost(dto): Post {
+    let post: Post;
+    switch (dto.postKind) {
+      case postKind.TWEET:
+        return dto;
+      case postKind.RETWEET:
+        post = {
+          postID: dto.postID,
+          userID: dto.userID,
+          name: dto.name,
+          content: "user: " + dto.oldName + " tweeted: " + dto.oldContent +
+            " RT content: " + dto.content,
+          date: dto.date,
+          postKind: postKind.RETWEET
+        }
+        return post;
+      case postKind.COMMENT:
+        return;
+      case postKind.FOLLOW:
+        return;
+    }
+  }
+
   initAllSubscribtions() {
     //Chat requests
     this.client.subscribe(`/topic/user/chatRequest/${this.user.id}`, callback => {
@@ -113,7 +138,8 @@ export class HomeComponent implements OnInit {
     //Own activity as in: tweeting/retweeting/commenting and following other users
     this.client.subscribe(`/topic/post/activity/${this.user.id}`, callback => {
       let dto = JSON.parse(callback.body);
-      this.posts.push(dto.content);
+
+      this.posts.push(dto);
     })
 
     //Timeline : this contains the activity of other players by showing them in order

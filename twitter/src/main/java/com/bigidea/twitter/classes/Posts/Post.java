@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public abstract class Post {
+public abstract class Post{
     private int id;
     private String content;
     private PostKind postKind;
