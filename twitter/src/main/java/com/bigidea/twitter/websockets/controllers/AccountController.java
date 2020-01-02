@@ -19,7 +19,7 @@ public class AccountController {
     private LogicHandler handler;
 
     @Autowired
-    public AccountController( LogicHandler handler){
+    public AccountController(LogicHandler handler){
         this.handler = handler;
     }
 
