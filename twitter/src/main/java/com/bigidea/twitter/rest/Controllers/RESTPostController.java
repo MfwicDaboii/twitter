@@ -34,7 +34,7 @@ public class RESTPostController {
         List<PostEntity> timeline = new ArrayList<>();
         List<Integer> ids = followRepository.getAllByUserID(id);
         for (int user_id: ids) {
-            timeline.addAll(postRepository.getActivityByUserID(user_id, Sort.by(Sort.Direction.ASC, "date")));
+            timeline.addAll(postRepository.getActivityByUserID(user_id));
         }
         //sort posts on date and kind
         return  timeline;
@@ -42,7 +42,7 @@ public class RESTPostController {
 
     @GetMapping("/get/activity")
     public List<PostEntity> getActivity(@Valid @RequestBody int id){
-        return postRepository.getActivityByUserID(id,Sort.by(Sort.Direction.ASC, "date"));
+        return postRepository.getActivityByUserID(id);
     }
 
     @GetMapping
@@ -53,7 +53,7 @@ public class RESTPostController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@Valid @RequestBody PostEntity post){
-        post.setDatum(LocalDate.now().toString());
+        post.setDate(LocalDate.now().toString());
         postRepository.save(post);
     }
 
