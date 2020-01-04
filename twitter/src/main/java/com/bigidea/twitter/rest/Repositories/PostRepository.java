@@ -14,6 +14,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     List<PostEntity> getPostsByDate(int id);
     PostEntity getById(int id);
     @Query(value = "select * from posts where user_id=?1" ,nativeQuery = true)
-    List<PostEntity> getActivityByUserID(int id, Sort sort);
+    List<PostEntity> getActivityByUserID(int id);
 }
 

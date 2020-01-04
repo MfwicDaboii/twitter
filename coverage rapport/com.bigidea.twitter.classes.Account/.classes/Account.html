@@ -1,0 +1,173 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Account</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.bigidea.twitter.classes.Account</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Account (com.bigidea.twitter.classes.Account)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Account</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    73,3%
+  </span>
+  <span class="absValue">
+    (11/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    65,7%
+  </span>
+  <span class="absValue">
+    (23/ 35)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.bigidea.twitter.classes.Account;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.bigidea.twitter.classes.User.User;
+<i>4</i>&nbsp;import com.bigidea.twitter.classes.Account.interfaces.IAccount;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import javax.persistence.*;
+<i>7</i>&nbsp;import java.security.SecureRandom;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class Account implements IAccount {
+<i>11</i>&nbsp;    private int id;
+<i>12</i>&nbsp;    private String username;
+<i>13</i>&nbsp;    private String password;
+<i>14</i>&nbsp;    private User user;
+<b class="fc"><i>15</i>&nbsp;    private static Account instance = null;</b>
+<i>16</i>&nbsp;
+<b class="nc"><i>17</i>&nbsp;    public Account(){</b>
+<i>18</i>&nbsp;
+<b class="nc"><i>19</i>&nbsp;    }</b>
+<b class="fc"><i>20</i>&nbsp;    public Account(String username, String password){</b>
+<b class="fc"><i>21</i>&nbsp;        this.username = username;</b>
+<b class="fc"><i>22</i>&nbsp;        this.password = password;</b>
+<b class="fc"><i>23</i>&nbsp;        user = null;</b>
+<i>24</i>&nbsp;
+<b class="fc"><i>25</i>&nbsp;        SecureRandom rnd = new SecureRandom();</b>
+<b class="fc"><i>26</i>&nbsp;        id = rnd.nextInt(9999);</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<b class="nc"><i>28</i>&nbsp;    public Account(String username, String password, User user){</b>
+<b class="nc"><i>29</i>&nbsp;        this.username = username;</b>
+<b class="nc"><i>30</i>&nbsp;        this.password = password;</b>
+<b class="nc"><i>31</i>&nbsp;        this.user = user;</b>
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;        SecureRandom rnd = new SecureRandom();</b>
+<b class="nc"><i>34</i>&nbsp;        id = rnd.nextInt(9999);</b>
+<b class="nc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public static void setInstance(Account account){
+<b class="fc"><i>38</i>&nbsp;            instance = account;</b>
+<b class="fc"><i>39</i>&nbsp;    }</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public int getId(){
+<b class="fc"><i>42</i>&nbsp;        return id;</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public void setId(int id) {
+<b class="nc"><i>46</i>&nbsp;        this.id = id;</b>
+<b class="nc"><i>47</i>&nbsp;    }</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public String getUsername() {
+<b class="fc"><i>51</i>&nbsp;        return username;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    private void setUsername(String username) {
+<b class="fc"><i>55</i>&nbsp;        this.username = username;</b>
+<b class="fc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public String getPassword() {
+<b class="fc"><i>60</i>&nbsp;        return password;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    private void setPassword(String password) {
+<b class="fc"><i>64</i>&nbsp;        this.password = password;</b>
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public User getUser() {
+<b class="fc"><i>68</i>&nbsp;        return user;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public void setUser(User user) {
+<b class="fc"><i>72</i>&nbsp;        this.user = user;</b>
+<b class="fc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    @Override
+<i>76</i>&nbsp;    public void updateCredentials(String username, String password) {
+<b class="fc"><i>77</i>&nbsp;        setUsername(username);</b>
+<b class="fc"><i>78</i>&nbsp;        setPassword(password);</b>
+<b class="fc"><i>79</i>&nbsp;    }</b>
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    @Override
+<i>82</i>&nbsp;    public String toString() {
+<b class="nc"><i>83</i>&nbsp;        return &quot;Account{&quot; +</b>
+<i>84</i>&nbsp;                &quot;id=&quot; + id +
+<i>85</i>&nbsp;                &quot;, username=&#39;&quot; + username + &#39;\&#39;&#39; +
+<i>86</i>&nbsp;                &quot;, password=&#39;&quot; + password + &#39;\&#39;&#39; +
+<i>87</i>&nbsp;                &quot;, user=&quot; + user +
+<i>88</i>&nbsp;                &#39;}&#39;;
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-01-04 14:58</div>
+</div>
+</body>
+</html>

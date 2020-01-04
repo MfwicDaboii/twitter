@@ -1,0 +1,64 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: IPostManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.bigidea.twitter.classes.Posts.interfaces</a> ]
+</div>
+
+<h1>Coverage Summary for Class: IPostManager (com.bigidea.twitter.classes.Posts.interfaces)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">IPostManager</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.bigidea.twitter.classes.Posts.interfaces;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.bigidea.twitter.classes.Posts.HashTag;
+<i>4</i>&nbsp;import com.bigidea.twitter.classes.Posts.Post;
+<i>5</i>&nbsp;import com.bigidea.twitter.classes.Posts.Tweet;
+<i>6</i>&nbsp;import com.bigidea.twitter.classes.User.User;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.ArrayList;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public interface IPostManager {
+<i>11</i>&nbsp;    Post postTweet(User user, String content);
+<i>12</i>&nbsp;    Post postReTweet(User user,String content, Tweet originalTweet);
+<i>13</i>&nbsp;    Post postComment(User user,String content, Post post);
+<i>14</i>&nbsp;    ArrayList&lt;String&gt; splitContent(String content);
+<i>15</i>&nbsp;    ArrayList&lt;HashTag&gt; createTags(ArrayList&lt;String&gt; topics);
+<i>16</i>&nbsp;    void like(int userId,Post post ,boolean isLike);
+<i>17</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-01-04 14:58</div>
+</div>
+</body>
+</html>

@@ -56,10 +56,10 @@ public class PostEntity {
     }
 
     @Column(name = "date", nullable = false)
-    public String getDatum() {
+    public String getDate() {
         return date;
     }
-    public void setDatum(String datum) {
+    public void setDate(String datum) {
         this.date = datum;
     }
 
