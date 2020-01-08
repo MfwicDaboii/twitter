@@ -10,6 +10,10 @@ public class FollowEntity {
     private int followerID;
 
     public FollowEntity(){}
+    public FollowEntity(int userID, int followerID) {
+        this.userID = userID;
+        this.followerID = followerID;
+    }
     public FollowEntity(int id, int userID, int followerID) {
         this.id = id;
         this.userID = userID;

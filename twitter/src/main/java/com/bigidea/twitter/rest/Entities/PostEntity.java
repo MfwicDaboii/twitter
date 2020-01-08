@@ -3,6 +3,7 @@ package com.bigidea.twitter.rest.Entities;
 import com.bigidea.twitter.enumerations.PostKind;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "posts")
@@ -12,7 +13,7 @@ public class PostEntity {
     private String content;
     private String date;
     private PostKind kind;
-    private int originalPostID;
+    private int op_id;
 
     public PostEntity(){}
 
@@ -27,7 +28,7 @@ public class PostEntity {
         this.userID = userID;
         this.content = content;
         this.kind = kind;
-        this.originalPostID = originalPostID;
+        this.op_id = originalPostID;
     }
 
     @Id
@@ -63,7 +64,7 @@ public class PostEntity {
         this.date = datum;
     }
 
-    @Column(name = "postKind", nullable = false)
+    @Column(name = "post_kind", nullable = false)
     public PostKind getKind() {
         return kind;
     }
@@ -71,11 +72,11 @@ public class PostEntity {
         this.kind = kind;
     }
 
-    @Column(name = "OP_id", nullable = false)
-    public int getOriginalPostID() {
-        return originalPostID;
+    @Column(name = "op_id", nullable = false)
+    public int getOp_id() {
+        return op_id;
     }
-    public void setOriginalPostID(int originalPostID) {
-        this.originalPostID = originalPostID;
+    public void setOp_id(int originalPostID) {
+        this.op_id = originalPostID;
     }
 }

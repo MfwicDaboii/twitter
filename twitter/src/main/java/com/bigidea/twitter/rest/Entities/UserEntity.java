@@ -1,23 +1,44 @@
 package com.bigidea.twitter.rest.Entities;
 
+import com.bigidea.twitter.classes.Account.Account;
 import com.bigidea.twitter.enumerations.Gender;
-import com.bigidea.twitter.enumerations.PostKind;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 
 @Entity
-@Table(name = "follow")
+@Table(name = "user_profiles")
 public class UserEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "firstname", nullable = false)
     private String firstname;
+
+    @Column(name = "lastname", nullable = false)
     private String lastname;
+
+    @Column(name = "age", nullable = false)
     private int age;
+
+    @Column(name = "gender", nullable = false)
     private Gender gender;
+
+    @Column(name = "biography", nullable = false)
     private String biography;
+
+    @Column(name = "user_id", nullable = false)
+    private int user_id;
 
     public UserEntity(){}
 
-    public UserEntity(String firstname, String lastname, int age, Gender gender, String biography) {
+    public UserEntity(String firstname, String lastname, int age, Gender gender,String biography ){
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
@@ -25,17 +46,6 @@ public class UserEntity {
         this.biography = biography;
     }
 
-    public UserEntity(int id, String firstname, String lastname, int age, Gender gender, String biography) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.age = age;
-        this.gender = gender;
-        this.biography = biography;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -43,7 +53,6 @@ public class UserEntity {
         this.id = id;
     }
 
-    @Column(name = "firstname", nullable = false)
     public String getFirstname() {
         return firstname;
     }
@@ -51,7 +60,6 @@ public class UserEntity {
         this.firstname = firstname;
     }
 
-    @Column(name = "lastname", nullable = false)
     public String getLastname() {
         return lastname;
     }
@@ -59,7 +67,6 @@ public class UserEntity {
         this.lastname = lastname;
     }
 
-    @Column(name = "age", nullable = false)
     public int getAge() {
         return age;
     }
@@ -67,7 +74,6 @@ public class UserEntity {
         this.age = age;
     }
 
-    @Column(name = "gender", nullable = false)
     public Gender getGender() {
         return gender;
     }
@@ -75,11 +81,17 @@ public class UserEntity {
         this.gender = gender;
     }
 
-    @Column(name = "biography", nullable = false)
     public String getBiography() {
         return biography;
     }
     public void setBiography(String biography) {
         this.biography = biography;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

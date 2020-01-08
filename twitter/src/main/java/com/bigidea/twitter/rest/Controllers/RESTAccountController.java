@@ -27,4 +27,9 @@ public class RESTAccountController {
         repository.save(account);
     }
 
+    @GetMapping("/getAll")
+    public List<AccountEntity> getAll(){
+        return repository.findAll();
+    }
+
 }

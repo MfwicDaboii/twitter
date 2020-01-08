@@ -1,5 +1,6 @@
 package com.bigidea.twitter.rest.Controllers;
 
+import com.bigidea.twitter.rest.Entities.FollowEntity;
 import com.bigidea.twitter.rest.Entities.PostEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -29,24 +30,24 @@ public class RESTPostController {
         return postRepository.findAll();
     }
 
-    @GetMapping("/get/timeline")
-    public List<PostEntity>  getTimeLine(@Valid @RequestBody int id){
+    @GetMapping("/get/timeline/{user_id}")
+    public List<PostEntity> getTimeLine(@PathVariable(value = "user_id") int id){
         List<PostEntity> timeline = new ArrayList<>();
-        List<Integer> ids = followRepository.getAllByUserID(id);
-        for (int user_id: ids) {
-            timeline.addAll(postRepository.getActivityByUserID(user_id));
+        List<FollowEntity> following = followRepository.getAllFollowers(id);
+        for(FollowEntity entity: following){
+            timeline.addAll(postRepository.getActivityByUserID(entity.getFollowerID()));
         }
         //sort posts on date and kind
         return  timeline;
     }
 
-    @GetMapping("/get/activity")
-    public List<PostEntity> getActivity(@Valid @RequestBody int id){
+    @GetMapping("/get/activity/{user_id}")
+    public List<PostEntity> getActivity(@PathVariable(value = "user_id") int id){
         return postRepository.getActivityByUserID(id);
     }
 
-    @GetMapping
-    public PostEntity getPostById(@Valid @RequestBody int id){
+    @GetMapping("/get/{post_id}")
+    public PostEntity getPostById(@PathVariable(value = "post_id") int id){
         return postRepository.getById(id);
     }
 
@@ -56,6 +57,4 @@ public class RESTPostController {
         post.setDate(LocalDate.now().toString());
         postRepository.save(post);
     }
-
-
 }

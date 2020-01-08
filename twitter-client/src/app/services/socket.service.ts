@@ -22,7 +22,7 @@ export class SocketService {
 
   connect() {
     this.state = new BehaviorSubject<ClientState>(ClientState.ATTEMPTING);
-    let socket = new SockJS(this.url)
+    let socket = new SockJS(this.url);
     this.client = over(socket);
     this.client.connect({},
       frame => {
