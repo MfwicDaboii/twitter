@@ -1,6 +1,6 @@
 package com.bigidea.twitter.classes.Posts.interfaces;
 
-import com.bigidea.twitter.classes.Posts.HashTag;
+import com.bigidea.twitter.classes.Hashtag.HashTag;
 import com.bigidea.twitter.classes.Posts.Post;
 import com.bigidea.twitter.classes.Posts.Tweet;
 import com.bigidea.twitter.classes.User.User;

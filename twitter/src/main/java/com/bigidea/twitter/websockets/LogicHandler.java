@@ -73,7 +73,7 @@ public class LogicHandler {
         User user = getUser(msg.getId());
         return new ChatDTO(chatManager.sendMessage(id,user,msg.getContent()));
     }
-    
+
     public void closeChat(int id){
         chatManager.closeChat(id);
     }
