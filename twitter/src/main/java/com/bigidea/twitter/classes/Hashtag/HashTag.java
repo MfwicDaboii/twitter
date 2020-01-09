@@ -1,4 +1,4 @@
-package com.bigidea.twitter.classes.Posts;
+package com.bigidea.twitter.classes.Hashtag;
 
 public class HashTag {
     private int id;

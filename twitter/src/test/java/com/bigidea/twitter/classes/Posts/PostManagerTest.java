@@ -1,5 +1,6 @@
 package com.bigidea.twitter.classes.Posts;
 
+import com.bigidea.twitter.classes.Hashtag.HashTag;
 import com.bigidea.twitter.classes.User.User;
 import com.bigidea.twitter.enumerations.Gender;
 import com.bigidea.twitter.classes.Posts.interfaces.IPostManager;

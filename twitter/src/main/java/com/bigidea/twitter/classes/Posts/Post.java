@@ -1,5 +1,6 @@
 package com.bigidea.twitter.classes.Posts;
 
+import com.bigidea.twitter.classes.Hashtag.HashTag;
 import com.bigidea.twitter.enumerations.PostKind;
 
 import java.security.SecureRandom;
